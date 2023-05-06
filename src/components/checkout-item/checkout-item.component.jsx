@@ -1,43 +1,42 @@
-import './checkout-item.styles';
-import { useContext } from 'react';
-import { CartContext } from '../../contexts/cart.context';
+import { useDispatch } from 'react-redux';
+
+import {
+  clearItemFromCart,
+  addItemToCart,
+  removeItemFromCart,
+} from '../../store/cart/cart.reducer';
 
 import {
   CheckoutItemContainer,
   ImageContainer,
-  CheckoutImage,
-  Name,
+  BaseSpan,
   Quantity,
-  Price,
   Arrow,
   Value,
   RemoveButton,
 } from './checkout-item.styles';
 
 const CheckoutItem = ({ cartItem }) => {
-  const { deleteItemFormCart, addItemToCart, removeItemFromCart } =
-    useContext(CartContext);
-
-  const delteItemHandler = () => deleteItemFormCart(cartItem);
-  const addItemHandler = () => addItemToCart(cartItem);
-  const removeItemHandler = () => removeItemFromCart(cartItem);
-
   const { name, imageUrl, price, quantity } = cartItem;
+  const dispatch = useDispatch();
+
+  const clearItemHandler = () => dispatch(clearItemFromCart(cartItem));
+  const addItemHandler = () => dispatch(addItemToCart(cartItem));
+  const removeItemHandler = () => dispatch(removeItemFromCart(cartItem));
+
   return (
     <CheckoutItemContainer>
       <ImageContainer>
-        <CheckoutImage src={imageUrl} alt={`${name}`} />
+        <img src={imageUrl} alt={`${name}`} />
       </ImageContainer>
-      <Name>{name}</Name>
+      <BaseSpan> {name} </BaseSpan>
       <Quantity>
         <Arrow onClick={removeItemHandler}>&#10094;</Arrow>
         <Value>{quantity}</Value>
         <Arrow onClick={addItemHandler}>&#10095;</Arrow>
       </Quantity>
-      <Price>{price}</Price>
-      <RemoveButton onClick={delteItemHandler} className='remove-button'>
-        &#10005;
-      </RemoveButton>
+      <BaseSpan> {price}</BaseSpan>
+      <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
     </CheckoutItemContainer>
   );
 };

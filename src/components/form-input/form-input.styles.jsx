@@ -18,7 +18,6 @@ export const FormInputLabel = styled.label`
   left: 5px;
   top: 10px;
   transition: 300ms ease all;
-
   ${({ shrink }) => shrink && shrinkLabelStyles};
 `;
 
@@ -38,7 +37,7 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
-  /* Targets nearest sibbling of type FormInputLabel */
+
   &:focus ~ ${FormInputLabel} {
     ${shrinkLabelStyles};
   }

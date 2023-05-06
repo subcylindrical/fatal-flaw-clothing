@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import FormInput from '../../form-input/form-input.component';
+
+import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
-
-import Button from '../button/button.component';
 
 import { SignUpContainer } from './sign-up-form.styles';
 
@@ -26,6 +27,7 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (password !== confirmPassword) {
       alert('passwords do not match');
       return;
@@ -41,9 +43,9 @@ const SignUpForm = () => {
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        alert('Cannot create user: email already in use');
+        alert('Cannot create user, email already in use');
       } else {
-        console.error('epic fail: ', error);
+        console.log('user creation encountered an error', error);
       }
     }
   };
@@ -67,6 +69,7 @@ const SignUpForm = () => {
           name='displayName'
           value={displayName}
         />
+
         <FormInput
           label='Email'
           type='email'
@@ -75,6 +78,7 @@ const SignUpForm = () => {
           name='email'
           value={email}
         />
+
         <FormInput
           label='Password'
           type='password'
@@ -83,6 +87,7 @@ const SignUpForm = () => {
           name='password'
           value={password}
         />
+
         <FormInput
           label='Confirm Password'
           type='password'
